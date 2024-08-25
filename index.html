@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- vue js cdn -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+    <script>
+        const {
+            createApp
+        } = Vue // ini bisa digunakan ketika kita sudah menaroh cdn vue js
+
+        createApp({
+            data() {
+                return {
+                    message: 'hello world, aku siap belajar vue js'
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
