@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- vue js cdn -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+
+<body>
+    <!-- <div id="app">
+        <button @click="tambah()">+</button>
+        {{ count }}
+        <button @click="kurang()">-</button>
+    </div> -->
+    <div id="app">
+        <button @click="tambah()">+</button>
+        {{ count }}
+        <button @click="kurang()">-</button>
+
+        <!-- penggunaan v-text -->
+        <div v-text="message">
+        </div>
+
+        <!-- penggunaan v-html -->
+        <div v-html="message1"></div>
+    </div>
+    <script type="module">
+        import{
+            createApp
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+
+        // const app = createApp({
+        //     data() {
+        //         return {
+        //             count: 0
+        //         }
+        //     },
+        //     methods: {
+        //         tambah() {
+        //             this.count++
+        //         },
+        //         kurang() {
+        //             this.count--
+        //         }
+        //     }
+        // })
+        // app.mount('#app')
+        createApp({
+            data(){
+                return{
+                    count:0,
+                    message: 'hello world',
+                    message1: '<strong>hello world</strong>'
+                }
+            },
+            methods:{
+                tambah(){
+                    this.count++
+                },
+                kurang(){
+                    this.count--
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

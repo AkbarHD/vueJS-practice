@@ -8,20 +8,30 @@
     <!-- vue js cdn -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
+<div id="app">
+    <button @click="tambah()">tambah data</button>
+    {{ count }}
+    <button @click="kurang()">kurang data</button>
+</div>
 
 <body>
-    <div id="app">
-        {{ message }}
-    </div>
     <script>
         const {
             createApp
-        } = Vue // ini bisa digunakan ketika kita sudah menaroh cdn vue js
+        } = Vue
 
         createApp({
             data() {
                 return {
-                    message: 'hello world, aku siap belajar vue js'
+                    count: 0
+                }
+            },
+            methods: {
+                tambah() {
+                    this.count++
+                },
+                kurang() {
+                    this.count--
                 }
             }
         }).mount('#app');
