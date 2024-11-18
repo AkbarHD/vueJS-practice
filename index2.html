@@ -21,12 +21,44 @@
         <button @click="kurang()">-</button>
 
         <!-- penggunaan v-text -->
-        <div v-text="message">
-        </div>
+        <div v-text="message"></div>
 
         <!-- penggunaan v-html -->
         <div v-html="message1"></div>
+
+        <!-- penggunaan v-if v-else -->
+        <div v-if="tampil == 2">
+            {{ message }}
+        </div>
+        <div v-else>
+            <strong>Pesan Tidak ditampilkan</strong>
+        </div>
+
+        <!-- penggunaaan v-if, else-if, v-else -->
+        <div v-if="nilai > 8">
+            <strong>Selamat Predikat kamu A</strong>
+        </div>
+        <div v-else-if="nilai <= 8 && nilai > 6">
+            <strong>Selamat Predikat kamu B</strong>
+        </div>
+        <div v-else>
+            <strong>Predikat kamu C</strong>
+        </div>
+
+        <!-- penggunaan v-show -->
+        <div v-show="show">
+            show muncul
+        </div>
+
+        <!-- studi kasus v-show -->
+        <div v-show="stateLampu == 1">
+            <b>Lamput Hidup...</b>
+        </div>
+        <button @click="onLampu()">Nyalakan Lampu</button>
+        <button @click="offLampu()">Matikan Lampu</button>
     </div>
+
+
     <script type="module">
         import{
             createApp
@@ -53,7 +85,11 @@
                 return{
                     count:0,
                     message: 'hello world',
-                    message1: '<strong>hello world</strong>'
+                    message1: '<strong>hello world</strong>',
+                    tampil: 3,
+                    nilai : 6,
+                    show : false,
+                    stateLampu : 2
                 }
             },
             methods:{
@@ -62,6 +98,12 @@
                 },
                 kurang(){
                     this.count--
+                },
+                onLampu(){
+                    this.stateLampu = 1
+                },
+                offLampu(){
+                    this.stateLampu = 2
                 }
             }
         }).mount('#app');
