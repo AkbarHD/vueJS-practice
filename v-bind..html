@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-vind</title>
+</head>
+<style>
+    .biru {
+        color: blue;
+    }
+</style>
+<div id="app">
+    <a v-bind:href="url">To Google</a>
+    <div>
+        <h2 v-bind:class="selected">User</h2>
+        <div>
+            <!-- kalu bukan di property tinggal mustache -->
+            <span>
+                {{ user.name }}
+            </span>
+            <div>
+                <img v-bind:src="user.image" v-bind:style="{width: size}" v-bind:alt="'ini gambar' + user.name"
+                    v-bind:title="user.name">
+            </div>
+        </div>
+    </div>
+</div>
+
+<body>
+
+    <script type="module">
+        import{
+            createApp
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+
+        createApp({
+            data(){
+                return{
+                    url: 'https://google.com',
+                    user: {
+                        name: 'Anjely Cantik',
+                        image :
+                        'https://images.unsplash.com/photo-1719937050814-72892488f741?q=80&w=1772&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    },
+                    size: '100px',
+                    selected : 'biru'
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

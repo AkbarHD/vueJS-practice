@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two way binding</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <label for="">Username : </label>
+            <input type="text" placeholder="Username" v-model="username">
+        </div>
+
+        <div>
+            <label for="">Address</label> <br>
+            <textarea v-model="address" placeholder="Address"></textarea>
+        </div>
+        <div>
+            <label for="">Gender</label>
+            <input type="radio" v-model="gender" value="Laki laki">
+            <input type="radio" v-model="gender" value="Perempuan">
+        </div>
+        <div>
+            <label for="">Hobby saya</label>
+            <br>
+            <label for="">Sepak Bola</label>
+            <input type="checkbox" v-model="hobbies" value="sepak bola">
+            <br>
+            <label for="">Tenis Meja</label>
+            <input type="checkbox" v-model="hobbies" value="tenis meja">
+            <br>
+            <label for="">Badminton</label>
+            <input type="checkbox" v-model="hobbies" value="badminton">
+        </div>
+        <div>
+            <label for="">Pekerjaan</label>
+            <select v-model="pekerjaan">
+                <option value="PNS">PNS</option>
+                <option value="TNI">TNI</option>
+                <option value="POLRI">POLRI</option>
+            </select>
+        </div>
+        <div>
+            username : {{ username }}
+            <br>
+            address {{ address }}
+            <br>
+            Gender : {{ gender }}
+            <br>
+            Hobbies : <span v-if="hobbies.length > 0">
+                <ul v-for="item in hobbies">
+                    <li>{{ item }}</li>
+                </ul>
+            </span>
+            <br>
+            Pekerjaan : {{ pekerjaan }}
+        </div>
+    </div>
+    <script type="module">
+        import{
+            createApp 
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+
+        createApp({
+            data(){
+                return{
+                    message : 'Hellow world',
+                    username: '',
+                    address : '',
+                    gender : '',
+                    hobbies : [],
+                    pekerjaan : ''
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

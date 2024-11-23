@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- for simple -->
+        <!-- <div v-for="angka in 10">
+            {{ angka }}
+        </div> -->
+        <!-- for array -->
+        <ul v-for="(buah, index)  in fruits">
+            <li>{{ buah }} {{ index }} <button @click="hapus(index)">x</button></li>
+        </ul>
+        <!-- for object -->
+        <ul v-for="(item, index) in footballs">
+            <!-- <li>{{ item }}</li> -->
+            <li>{{ item.nama }} - {{ item.negara }} {{ index }} <button @click="remove(index)">x</button></li>
+        </ul>
+    </div>
+    <script type="module">
+        import{
+            createApp
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+        createApp({
+            data(){
+                return{
+                    fruits: ['apple', 'banana', 'orange'],
+                    footballs: [
+                        {nama : 'Lionel Messi', negara : 'Argentina'},
+                        {nama : 'Cristiano Ronaldo', negara : 'Portugal'},
+                        {nama : 'Kylian Mbappe', negara : 'France'},
+                        {nama : 'Neymar Jr', negara : 'Brazil'}
+                    ]
+                }
+            },
+            methods: {
+                hapus(index){
+                    this.fruits.splice(index, 1)
+                },
+                remove(index){
+                    this.footballs.splice(index, 1)
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
