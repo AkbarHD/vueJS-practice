@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" value="coba aja" ref="inputan"> <br>
+
+        <input type="text" :value="count" ref="hitungan">
+        <button @click="count++">add</button>
+    </div>
+    <script type="module">
+        import{
+            createApp
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+        createApp({
+            data(){
+                return{
+                    message : 'Hellow world',
+                    count: 0
+                }
+            },
+            beforeCreate() {
+                console.log(`brefore create : ${this.message}`)
+            },
+            created() {
+                console.log(`afrer create : ${this.message}` )
+            },
+            // belum  kenal dom
+            beforeMount() {
+                console.log(`before mount : ${this.$refs.inputan}`)
+            },
+            //sudah kenal dom
+            mounted() {
+                console.log(`after mount : ${this.$refs.inputan.value}`)
+            },
+            beforeUpdate() {
+                console.log(`before update : ${this.$refs.hitungan.value}`)
+            },
+            // di click dulu
+            updated() {
+                
+                console.log(`after updata : ${this.$refs.hitungan.value}`)
+            },
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<style>
+    .card {
+        background-color: rgba(255, 255, 255, 0.21);
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(9px);
+        border-left: 2px solid rgba(255, 255, 255, 0.58);
+        border-top: 2px solid rgba(255, 255, 255, 0.58);
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="container-fluid bg-dark bg-gradient">
+            <div class="container bg-dark" style="min-height: 100vh;">
+                <div class="row justify-content-center">
+                    <div class="col-5">
+                        <img src="img/logo-pokemon.png" alt="">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mt-5">
+                    <div class="col-6">
+                        <input type="text" name="" id="" class="form-control" placeholder="search...">
+                    </div>
+                </div>
+
+                <div class="main mt-5 pt-5">
+                    <!-- brati true -->
+                    <div class="view-all text-white" v-if="!viewAsDetail">
+                        <div class="row px-5">
+                            <div class="col-12 col-md-4 col-lg-3 mb-3 " v-for="item in pokemonList"
+                                @click="viewDetailPokemon(item.name)">
+                                <div class="card">
+                                    <img :src="item.sprites.front_default">
+                                    <span class="text-center text-white" style="font-size: 20px;">{{ item.name }}
+                                        <!-- {{item.id}} -->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- view detail -->
+                    <div class="view-detail text-white" v-else>
+                        <div class="mb-5">
+                            <button class="btn btn-primary" @click="viewAsDetail = false"> View All Pokemon</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <img :src="selectedPokemon.sprites.front_default">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h2> {{ selectedPokemon.name }} </h2>
+                                <p>
+                                    <label for="">Type : </label>
+                                    <span v-for="i in selectedPokemon.types">
+                                        {{ i.type.name }} ~
+                                    </span>
+                                </p>
+                                <p>
+                                    <label for="">Skills :</label>
+                                    <span v-for="i in selectedPokemon.moves">
+                                        {{ i.move.name }} |
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import{
+            createApp
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
+
+        createApp({
+            data(){
+                return{
+                    pokemonList : [],
+                    viewAsDetail : false,
+                    selectedPokemon : ''
+                }
+            },
+            methods:{
+                async getListPokemon(){
+                    let response = await fetch("https://pokeapi.co/api/v2/pokemon");
+                    // console.log(response);
+                    // kita rubah ke json
+                    let data = await response.json();
+                    // console.log(data);
+                    let results = data.results; // brenti di result masih ada name, url
+                    console.log(results);
+                    results.forEach(item => {
+                        this.getEachPokemon(item)
+                    });
+                },
+                 async getEachPokemon(item){
+                    let response = await fetch("https://pokeapi.co/api/v2/pokemon/"+item.name);
+                    let data = await response.json();
+                    // console.log(data);
+
+                    // masuk ke array pokemonList
+                    this.pokemonList.push(data); // bakalan nampilin banyak pokemon kareana array
+                    // sorting berdasarkan id, karena jika tdk di sorting maka akan muncul secara random
+                    this.pokemonList.sort((a,b) => a.id - b.id);
+                 },
+                 async viewDetailPokemon(pokemonName){
+                     // ketika salah satu card di click maka akan hilang atau (true)
+                    this.viewAsDetail = true // true itu tidak sama dengan false
+                    let response = await fetch('https://pokeapi.co/api/v2/pokemon/'+pokemonName);
+                    let data = await response.json();
+                    // console.log(data);
+                    // console.log(pokemon);
+                    this.selectedPokemon = data // bakalan nampilin 1 pokemon karena string
+                 }
+            },
+            mounted() {
+                this.getListPokemon();
+            },
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
