@@ -29,9 +29,14 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center mt-5">
+                <div class="row justify-content-center mt-5 text-white">
                     <div class="col-6">
-                        <input type="text" name="" id="" class="form-control" placeholder="search...">
+                        <input type="text" name="" id="" class="form-control" placeholder="search..." v-model="search">
+                        <div class="mt-2">
+                            <label for="">Sugestion : <span v-for="i in suggestedPokemon"
+                                    @click="viewDetailPokemon(i.name)">{{ i.name }} |</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -92,7 +97,10 @@
                 return{
                     pokemonList : [],
                     viewAsDetail : false,
-                    selectedPokemon : ''
+                    selectedPokemon : '',
+                    search : '',
+                    gen1Pokemon : [],
+                    suggestedPokemon : ''
                 }
             },
             methods:{
@@ -103,7 +111,7 @@
                     let data = await response.json();
                     // console.log(data);
                     let results = data.results; // brenti di result masih ada name, url
-                    console.log(results);
+                    // console.log(results);
                     results.forEach(item => {
                         this.getEachPokemon(item)
                     });
@@ -126,10 +134,33 @@
                     // console.log(data);
                     // console.log(pokemon);
                     this.selectedPokemon = data // bakalan nampilin 1 pokemon karena string
+                 },
+                 async getGen1Pokemon(){
+                    let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+                    let data  = await response.json();
+                    // console.log(data);
+                    let result = data.results;
+                    // console.log(result);
+                    this.gen1Pokemon = result;
+                    // console.log(this.gen1Pokemon);
+                    // this.gen1Pokemon.push(result);  tidak perlu di push bingung juga wkwk
                  }
             },
+            watch: {
+                search(){
+                    let filteredPokemon = this.gen1Pokemon.filter(item => {
+                        return item.name.includes(this.search);
+                    })
+                    // console.log(filteredPokemon);
+                    // console.log(this.gen1Pokemon);
+                    this.suggestedPokemon = filteredPokemon.slice(0,3); // batas muncul 3 (slice)
+                }
+            },
             mounted() {
-                this.getListPokemon();
+                // untuk 
+                this.getListPokemon()
+                // untuk memanggil semua pokemon gen1 dari search
+                this.getGen1Pokemon()
             },
         }).mount('#app');
     </script>
